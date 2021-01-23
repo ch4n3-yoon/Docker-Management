@@ -3,6 +3,7 @@ from django.db import models
 
 class Project(models.Model):
     name = models.CharField(max_length=128)
+    description = models.TextField(null=True)
 
 
 class Docker(models.Model):
@@ -13,5 +14,5 @@ class Docker(models.Model):
     name = models.CharField(max_length=128)
     image = models.CharField(max_length=64, null=True, blank=True)
     environment = models.TextField(default=None, null=True, blank=True)
-    ports = models.TextField(default=None, null=True, blank=True)   # store data as json
+    ports = models.TextField(default=None, null=True, blank=True)
 
