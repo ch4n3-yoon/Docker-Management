@@ -4,7 +4,8 @@ from django.views import View
 from .models import Project, Docker
 from Lib import api
 
-import yaml
+# import yaml
+import oyaml as yaml
 import json
 import pprint
 
@@ -22,13 +23,15 @@ def create_docker_compose_yml(request, project_id=1):
     """
     Create docker-compose.yml
     """
-    print('[ DEBUG ] project_id :', project_id)
     project = Project.objects.get(id=project_id)
     if not project:
         # No such project
         return api.fail('No such project')
 
-    docker_compose = {'version': 3, 'services': {}}
+    # Do not combine the two lines of code below
+    docker_compose = {'version': '3'}
+    docker_compose['services'] = {}
+
     dockers = Docker.objects.filter(project=project)
     for docker in dockers:
         local_docker_compose = {}
@@ -52,6 +55,7 @@ def create_docker_compose_yml(request, project_id=1):
 
         docker_compose['services'][docker.name] = local_docker_compose
 
+    pprint.pprint(docker_compose)
     docker_compose_yml = yaml.dump(docker_compose)
 
     # TODO: store docker-compose.yml as real file
