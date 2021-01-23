@@ -1,9 +1,9 @@
 
 from django.urls import path
-from .views import create_project, create_docker_compose_yml
+from . import views
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('project/create', create_project),
-    path('project/<int:project_id>/docker-compose.yml', create_docker_compose_yml),
+    path('project/create', views.create_project),
+    path('project/<int:project_id>/docker-compose.yml', views.create_docker_compose_yml),
 ]

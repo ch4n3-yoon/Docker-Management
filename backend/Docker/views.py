@@ -2,10 +2,11 @@
 from django.http import HttpResponse, JsonResponse
 from django.views import View
 from .models import Project, Docker
-import Lib.api
+from Lib import api
 
 import yaml
 import json
+import pprint
 
 
 def create_project(request):
@@ -17,10 +18,11 @@ def create_project(request):
     return HttpResponse('fuck')
 
 
-def create_docker_compose_yml(request, project_id):
+def create_docker_compose_yml(request, project_id=1):
     """
     Create docker-compose.yml
     """
+    print('[ DEBUG ] project_id :', project_id)
     project = Project.objects.get(id=project_id)
     if not project:
         # No such project
@@ -46,22 +48,13 @@ def create_docker_compose_yml(request, project_id):
         ]
         """
         ports = json.loads(docker.ports)
-        local_docker_compose['ports'] = [f"{port.outer}:{port.inner}" for port in ports]
+        local_docker_compose['ports'] = [f"{port.get('outer')}:{port.get('inner')}" for port in ports]
 
-        docker_compose[docker.name] = local_docker_compose
+        docker_compose['services'][docker.name] = local_docker_compose
 
     docker_compose_yml = yaml.dump(docker_compose)
 
     # TODO: store docker-compose.yml as real file
 
     return HttpResponse(docker_compose_yml)
-
-
-def create_docker_compose_yml(request):
-    """
-    Make docker-compose.yml
-
-    :param request:
-    :return:
-    """
 
