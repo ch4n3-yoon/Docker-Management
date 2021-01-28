@@ -16,3 +16,10 @@ class Docker(models.Model):
     environment = models.TextField(default=None, null=True, blank=True)
     ports = models.TextField(default=None, null=True, blank=True)
 
+
+class Dockerfile(models.Model):
+    docker = models.OneToOneField(
+        Docker,
+        on_delete=models.CASCADE,
+    )
+    dockerfile = models.TextField(default=None, blank=True)

@@ -1,7 +1,10 @@
 # Django
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, JsonResponse
-from django.views import View
-from .models import Project, Docker
+from .models import Project, Docker, Dockerfile
+from rest_framework import viewsets
+from rest_framework.parsers import JSONParser
+
 from Lib import api
 
 # import yaml
@@ -34,6 +37,9 @@ def create_docker_compose_yml(request, project_id=1):
 
     dockers = Docker.objects.filter(project=project)
     for docker in dockers:
+        dockerfile = Dockerfile.objects.get(docker=docker)
+        file = open('/tmp/')
+
         local_docker_compose = {}
         local_docker_compose['image'] = docker.image
 
@@ -61,4 +67,5 @@ def create_docker_compose_yml(request, project_id=1):
     # TODO: store docker-compose.yml as real file
 
     return HttpResponse(docker_compose_yml)
+
 
