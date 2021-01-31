@@ -9,8 +9,8 @@ function App() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Login}/>
-        {/*<Route path="/project" component={P}/>*/}
+        <Route exact path="/" component={Login} />
+        <Route exact path="/project" component={DockerCompose} />
       </Switch>
     </BrowserRouter>
   );
