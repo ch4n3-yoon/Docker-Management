@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import React from 'react';
 import DockerCompose from './pages/docker-compose';
+import ProjectView from './pages/ProjectView';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Login from './pages/Login';
 
@@ -11,6 +12,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Login} />
         <Route exact path="/project" component={DockerCompose} />
+        <Route path="/project/:projectId" component={ProjectView} />
       </Switch>
     </BrowserRouter>
   );
