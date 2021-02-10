@@ -33,7 +33,7 @@ const DockerCompose = () => {
         {(dummy_data.map((project) => (
           <Segment>
             <Grid celled="internally">
-              <Grid.Row onClick={handleClick(project.id)}>
+              <Grid.Row onClick={() => handleClick(project.id)}>
                 <Grid.Column width={4}>
                   <Header>{project.name}</Header>
                 </Grid.Column>
